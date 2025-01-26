@@ -23,13 +23,10 @@ export default function Home() {
       <section className="pt-32 pb-20 px-4 md:px-8 max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="w-48 h-48 rounded-full bg-gray-200 flex-shrink-0 relative overflow-hidden">
-            <Image
-              src="/images/myphoto.jpg"
+            <img
+              src="/portfolio-site/images/myphoto.jpg"
               alt="王娜的照片"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 192px, 192px"
-              priority
+              className="object-cover w-full h-full"
             />
           </div>
           <div className="text-center md:text-left">
