@@ -2,100 +2,171 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="fixed w-full bg-white/80 backdrop-blur-sm z-50 border-b">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <div className="flex items-center justify-between h-16">
+            <span className="font-bold text-xl">
+              王娜
+            </span>
+            <div className="flex space-x-8">
+              <a href="#experience" className="hover:text-gray-600">工作经验</a>
+              <a href="#projects" className="hover:text-gray-600">项目经验</a>
+              <a href="#contact" className="hover:text-gray-600">联系我</a>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-4 md:px-8 max-w-6xl mx-auto">
+        <div className="flex flex-col md:flex-row items-center gap-12">
+          <div className="w-48 h-48 rounded-full bg-gray-200 flex-shrink-0 relative overflow-hidden">
+            <Image
+              src="/images/myphoto.jpg"
+              alt="王娜的照片"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 192px, 192px"
+              priority
+            />
+          </div>
+          <div className="text-center md:text-left">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              你好，我是 王娜 👋
+            </h1>
+            <p className="text-xl text-gray-600 mb-6">
+              资深UI设计师 / 12年设计经验
+            </p>
+            <div className="text-gray-600 max-w-2xl space-y-4">
+              <p>
+                毕业于西安美术学院，拥有12年UI设计经验。曾就职于阿里、拼多多等知名互联网公司，
+                专注于创造美观且实用的数字体验。
+              </p>
+              <p>
+                擅长B端、C端产品设计，具有丰富的电商、金融、企业级应用设计经验。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Experience Section */}
+      <section className="py-20 px-4 md:px-8 bg-gray-50" id="experience">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold mb-12 text-center">工作经验</h2>
+          <div className="space-y-8">
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="flex justify-between items-start mb-4">
+                <h3 className="font-bold text-xl">兴业数金</h3>
+                <span className="text-gray-500">2023.04 - 至今</span>
+              </div>
+              <ul className="space-y-2 text-gray-600 list-disc pl-5">
+                <li>负责兴享惠金融生活类小程序UI设计，提升用户体验和品牌辨识度</li>
+                <li>负责B端兴魔方云化低代码开发平台的UI设计，优化操作体验，统一视觉语言</li>
+                <li>设计推广活动物料，包括DM单和易拉宝，有效提升用户转化率</li>
+              </ul>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="flex justify-between items-start mb-4">
+                <h3 className="font-bold text-xl">阿里云计算</h3>
+                <span className="text-gray-500">2020.04 - 2022.08</span>
+              </div>
+              <ul className="space-y-2 text-gray-600 list-disc pl-5">
+                <li>负责无影云电脑B端产品的系统界面设计与icon动效</li>
+                <li>主导云管控侧平台界面视觉与交互设计工作</li>
+                <li>编写视觉交互设计规范文档，确保设计方案有效实施</li>
+                <li>参与产品可用性测试，持续优化设计提升产品竞争力</li>
+              </ul>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="flex justify-between items-start mb-4">
+                <h3 className="font-bold text-xl">拼多多</h3>
+                <span className="text-gray-500">2018.03 - 2019.06</span>
+              </div>
+              <ul className="space-y-2 text-gray-600 list-disc pl-5">
+                <li>负责商品详情页和主图展示效果设计，提升用户购物体验</li>
+                <li>设计推广图和运营活动，提高页面点击率和转化率</li>
+                <li>参与品牌形象设计，为平台提供创新设计方案</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section className="py-20 px-4 md:px-8" id="projects">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold mb-12 text-center">项目经验</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white rounded-xl overflow-hidden shadow-lg">
+              <div className="h-48 bg-gray-100 relative">
+                <div className="absolute inset-0 flex items-center justify-center text-gray-400">
+                  兴享惠小程序截图
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="font-bold text-xl mb-2">兴享惠金融小程序</h3>
+                <p className="text-gray-600 mb-4">
+                  负责小程序UI设计与运营活动设计，通过优化用户界面和视觉体验，提升了用户参与度和品牌认知度。重点优化了支付流程和会员服务界面，使用户操作更加流畅。
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl overflow-hidden shadow-lg">
+              <div className="h-48 bg-gray-100 relative">
+                <div className="absolute inset-0 flex items-center justify-center text-gray-400">
+                  无影云电脑截图
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="font-bold text-xl mb-2">阿里无影云电脑</h3>
+                <p className="text-gray-600 mb-4">
+                  为B端企业打造的云桌面服务，负责系统界面设计与交互规范制定。通过深入理解企业用户需求，设计了直观且高效的管理界面，显著提升了产品易用性。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-20 px-4 md:px-8 bg-gray-50" id="contact">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-8">联系我</h2>
+          <p className="text-gray-600 mb-12">
+            期待能有机会和您详细交流，了解更多合作机会
+          </p>
+          <div className="inline-flex flex-col md:flex-row justify-center items-center gap-6 bg-white px-8 py-6 rounded-lg shadow-sm">
+            <a 
+              href="mailto:alice_wang_2018@163.com" 
+              className="flex items-center gap-3 text-black hover:text-gray-600 transition-colors px-4 py-2 rounded-full hover:bg-gray-50"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <span>发送邮件</span>
+            </a>
+            <span className="hidden md:inline text-gray-300">|</span>
+            <a 
+              href="/wangna-resume.pdf"
+              className="flex items-center gap-3 text-black hover:text-gray-600 transition-colors px-4 py-2 rounded-full hover:bg-gray-50"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="12" y1="18" x2="12" y2="12"/>
+                <line x1="9" y1="15" x2="15" y2="15"/>
+              </svg>
+              <span>下载简历</span>
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
