@@ -2,7 +2,9 @@
 const nextConfig = {
   output: 'export',
   images: {
-    unoptimized: true
+    unoptimized: true,
+    loader: 'custom',
+    loaderFile: './image-loader.js'
   },
   basePath: '/portfolio-site',
   assetPrefix: '/portfolio-site'
