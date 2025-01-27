@@ -1,4 +1,6 @@
+'use client';
 import Image from "next/image";
+import { useState } from "react";
 
 // Helper function to get the correct asset path
 const getAssetPath = (path) => {
@@ -6,6 +8,82 @@ const getAssetPath = (path) => {
 };
 
 export default function Home() {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [scale, setScale] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+
+  const handleWheel = (e) => {
+    if (e.ctrlKey) {
+      // 仅在按住 Ctrl 键时进行缩放
+      e.preventDefault();
+      const delta = e.deltaY * -0.001;
+      const newScale = Math.min(Math.max(1, scale + delta), 3);
+      setScale(newScale);
+    }
+    // 不按 Ctrl 时保持正常滚动
+  };
+
+  const handleDragStart = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+    setDragStart({
+      x: e.clientX - position.x,
+      y: e.clientY - position.y
+    });
+  };
+
+  const handleDragMove = (e) => {
+    if (!isDragging) return;
+    
+    const maxDragX = window.innerWidth * scale;
+    const maxDragY = window.innerHeight * scale;
+    
+    const newX = e.clientX - dragStart.x;
+    const newY = e.clientY - dragStart.y;
+    
+    setPosition({
+      x: Math.min(Math.max(newX, -maxDragX), maxDragX),
+      y: Math.min(Math.max(newY, -maxDragY), maxDragY)
+    });
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+  };
+
+  const handleModalClick = (e) => {
+    if (e.target === e.currentTarget) {
+      setSelectedImage(null);
+      setScale(1);
+      setPosition({ x: 0, y: 0 });
+    }
+  };
+
+  const projects = [
+    {
+      title: "VR设计、数字展厅、数字人",
+      image: "/project_images/wechatapp.png",
+      description: "主导VR/AR数字孪生系统交互界面设计，整合AI技术生成展厅主视觉方案。设计VR古籍修复游戏全流程UI系统，优化3D界面交互逻辑，用户平均体验时长提升35%。开发AR导航跨端界面，统一各端视觉规范，服务日均用户1200+。主导200㎡智能展厅动态墙面视觉体系，开发4K级数据可视化模板。"
+    },
+    {
+      title: "兴业数金金融产品",
+      image: "/project_images/caipudaquan.png",
+      description: "主导兴享惠小程序界面改版，重构布局与组件体系，强化品牌视觉一致性。设计兴魔方云平台B端方案，建立标准化交互组件库，简化复杂操作流程。搭建小程序活动视觉体系，通过动态排版与色彩策略提升banner及落地页引导效果。策划银行信用卡推广视觉，设计系列品牌延展物料。"
+    },
+    {
+      title: "云计算、小程序、B端定制",
+      image: "/project_images/samsang.png",
+      description: "主导阿里无影云电脑界面视觉体系与多端交互规范设计，优化核心操作路径及管控后台可视化。设计三星BI数据平台可视化重构，建立B端可视化设计规范。重构恒基地产APP用户核心界面与标准化设计系统。设计天安农业电商小程序提货卡系统，统一线上线下视觉链路。"
+    },
+    {
+      title: "社交电商与生活服务",
+      image: "/project_images/pdd.png",
+      description: "在拼多多期间主导商品详情页设计与主图展示效果优化，提升用户购物体验。设计推广图和运营活动，为品牌形象塑造提供支持。此前还主导设计白酒新零售电商平台、【菜谱大全】APP（食谱/食材商城/社区/短视频）与【不二街】（O2O联盟/优惠券营销）等项目。"
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
       {/* Navigation */}
@@ -115,76 +193,92 @@ export default function Home() {
       </section>
 
       {/* Projects Section */}
-      <section className="py-20 px-4 md:px-8" id="projects">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">项目经验</h2>
+      <section className="py-20 px-4 md:px-8 relative" id="projects">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-blue-50 opacity-50"></div>
+        <div className="max-w-6xl mx-auto relative">
+          <h2 className="text-3xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">项目经验</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-xl overflow-hidden shadow-lg">
-              <div className="h-48 bg-gray-100 relative overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=800&auto=format&fit=crop&q=80"
-                  alt="VR设计展示"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                />
+            {projects.map((project, index) => (
+              <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
+                <div 
+                  className="h-48 bg-gray-100 relative overflow-hidden cursor-pointer"
+                  onClick={() => setSelectedImage(getAssetPath(project.image))}
+                >
+                  <Image
+                    src={getAssetPath(project.image)}
+                    alt={project.title}
+                    width={1200}
+                    height={675}
+                    className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-30 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
+                      点击查看详情
+                    </span>
+                  </div>
+                </div>
+                <div className="p-6 bg-gradient-to-br from-white to-gray-50">
+                  <h3 className="font-bold text-xl mb-2 text-gray-800">{project.title}</h3>
+                  <p className="text-gray-600 mb-4 leading-relaxed">{project.description}</p>
+                </div>
               </div>
-              <div className="p-6">
-                <h3 className="font-bold text-xl mb-2">VR设计、数字展厅、数字人</h3>
-                <p className="text-gray-600 mb-4">
-                  主导VR/AR数字孪生系统交互界面设计，整合AI技术生成展厅主视觉方案。设计VR古籍修复游戏全流程UI系统，优化3D界面交互逻辑，用户平均体验时长提升35%。开发AR导航跨端界面，统一各端视觉规范，服务日均用户1200+。主导200㎡智能展厅动态墙面视觉体系，开发4K级数据可视化模板。
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl overflow-hidden shadow-lg">
-              <div className="h-48 bg-gray-100 relative overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&auto=format&fit=crop&q=80"
-                  alt="金融应用界面"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="font-bold text-xl mb-2">兴业数金金融产品</h3>
-                <p className="text-gray-600 mb-4">
-                  主导兴享惠小程序界面改版，重构布局与组件体系，强化品牌视觉一致性。设计兴魔方云平台B端方案，建立标准化交互组件库，简化复杂操作流程。搭建小程序活动视觉体系，通过动态排版与色彩策略提升banner及落地页引导效果。策划银行信用卡推广视觉，设计系列品牌延展物料。
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl overflow-hidden shadow-lg">
-              <div className="h-48 bg-gray-100 relative overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop&q=80"
-                  alt="云计算平台"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="font-bold text-xl mb-2">云计算、小程序、B端定制</h3>
-                <p className="text-gray-600 mb-4">
-                  主导阿里无影云电脑界面视觉体系与多端交互规范设计，优化核心操作路径及管控后台可视化。设计三星BI数据平台可视化重构，建立B端可视化设计规范。重构恒基地产APP用户核心界面与标准化设计系统。设计天安农业电商小程序提货卡系统，统一线上线下视觉链路。
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl overflow-hidden shadow-lg">
-              <div className="h-48 bg-gray-100 relative overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1601972599720-36938d4ecd31?w=800&auto=format&fit=crop&q=80"
-                  alt="社交电商场景"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="font-bold text-xl mb-2">社交电商与生活服务</h3>
-                <p className="text-gray-600 mb-4">
-                  在拼多多期间主导商品详情页设计与主图展示效果优化，提升用户购物体验。设计推广图和运营活动，为品牌形象塑造提供支持。此前还主导设计白酒新零售电商平台、【菜谱大全】APP（食谱/食材商城/社区/短视频）与【不二街】（O2O联盟/优惠券营销）等项目。
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* Image Preview Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-95 z-50 overflow-y-auto"
+          onClick={handleModalClick}
+        >
+          <button 
+            className="fixed top-4 right-4 text-white hover:text-gray-300 transition-colors z-50 cursor-pointer"
+            onClick={() => {
+              setSelectedImage(null);
+              setScale(1);
+              setPosition({ x: 0, y: 0 });
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <div className="min-h-screen w-full flex items-start justify-center">
+            <div 
+              className="w-[1000px] relative mt-8"
+              onWheel={handleWheel}
+              onMouseDown={handleDragStart}
+              onMouseMove={handleDragMove}
+              onMouseUp={handleDragEnd}
+              onMouseLeave={handleDragEnd}
+              style={{
+                cursor: isDragging ? 'grabbing' : 'grab'
+              }}
+            >
+              <Image
+                src={selectedImage}
+                alt="Project preview"
+                width={1000}
+                height={2000}
+                className="w-full object-contain select-none"
+                quality={100}
+                priority
+                draggable={false}
+                style={{
+                  transform: `scale(${scale})`,
+                  transformOrigin: 'top center',
+                  transition: isDragging ? 'none' : 'transform 0.1s ease-out',
+                }}
+              />
+            </div>
+            <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black bg-opacity-50 px-4 py-2 rounded-full">
+              按住 Ctrl + 滚轮缩放，直接滚动查看图片
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Contact Section */}
       <section className="py-20 px-4 md:px-8 bg-gradient-to-br from-blue-50 via-white to-indigo-50" id="contact">
