@@ -7,6 +7,13 @@ const getAssetPath = (path) => {
   return process.env.NODE_ENV === 'production' ? `/portfolio-site${path}` : path;
 };
 
+// Helper function to get Cloudinary URL
+const getCloudinaryUrl = (imageName) => {
+  // 从路径中提取文件名
+  const fileName = imageName.split('/').pop().split('.')[0];
+  return `https://res.cloudinary.com/dmclw72yc/image/upload/q_auto,f_auto/v1/portfolio-site/${fileName}`;
+};
+
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [scale, setScale] = useState(1);
@@ -64,22 +71,22 @@ export default function Home() {
   const projects = [
     {
       title: "VR设计、数字展厅、数字人",
-      image: "/project_images/wechatapp.png",
+      image: "https://res.cloudinary.com/dmclw72yc/image/upload/v1737960952/caipudaquan_w8ydbh.png",
       description: "主导VR/AR数字孪生系统交互界面设计，整合AI技术生成展厅主视觉方案。设计VR古籍修复游戏全流程UI系统，优化3D界面交互逻辑，用户平均体验时长提升35%。开发AR导航跨端界面，统一各端视觉规范，服务日均用户1200+。主导200㎡智能展厅动态墙面视觉体系，开发4K级数据可视化模板。"
     },
     {
       title: "兴业数金金融产品",
-      image: "/project_images/caipudaquan.png",
+      image: "https://res.cloudinary.com/dmclw72yc/image/upload/v1737960949/wechatapp_wcgupi.png",
       description: "主导兴享惠小程序界面改版，重构布局与组件体系，强化品牌视觉一致性。设计兴魔方云平台B端方案，建立标准化交互组件库，简化复杂操作流程。搭建小程序活动视觉体系，通过动态排版与色彩策略提升banner及落地页引导效果。策划银行信用卡推广视觉，设计系列品牌延展物料。"
     },
     {
       title: "云计算、小程序、B端定制",
-      image: "/project_images/samsang.png",
+      image: "https://res.cloudinary.com/dmclw72yc/image/upload/v1737960951/samsang_uupiss.png",
       description: "主导阿里无影云电脑界面视觉体系与多端交互规范设计，优化核心操作路径及管控后台可视化。设计三星BI数据平台可视化重构，建立B端可视化设计规范。重构恒基地产APP用户核心界面与标准化设计系统。设计天安农业电商小程序提货卡系统，统一线上线下视觉链路。"
     },
     {
       title: "社交电商与生活服务",
-      image: "/project_images/pdd.png",
+      image: "https://res.cloudinary.com/dmclw72yc/image/upload/v1737960952/pdd_hfvu1c.png",
       description: "在拼多多期间主导商品详情页设计与主图展示效果优化，提升用户购物体验。设计推广图和运营活动，为品牌形象塑造提供支持。此前还主导设计白酒新零售电商平台、【菜谱大全】APP（食谱/食材商城/社区/短视频）与【不二街】（O2O联盟/优惠券营销）等项目。"
     }
   ];
@@ -202,14 +209,16 @@ export default function Home() {
               <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
                 <div 
                   className="h-48 bg-gray-100 relative overflow-hidden cursor-pointer"
-                  onClick={() => setSelectedImage(getAssetPath(project.image))}
+                  onClick={() => setSelectedImage(project.image)}
                 >
                   <Image
-                    src={getAssetPath(project.image)}
+                    src={project.image}
                     alt={project.title}
-                    width={1200}
-                    height={675}
+                    width={600}
+                    height={338}
                     className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                    quality={75}
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-30 transition-opacity duration-300 flex items-center justify-center">
                     <span className="text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
@@ -263,9 +272,10 @@ export default function Home() {
                 width={1000}
                 height={2000}
                 className="w-full object-contain select-none"
-                quality={100}
+                quality={85}
                 priority
                 draggable={false}
+                loading="eager"
                 style={{
                   transform: `scale(${scale})`,
                   transformOrigin: 'top center',
