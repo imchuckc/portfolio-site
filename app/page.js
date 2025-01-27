@@ -1,8 +1,13 @@
 import Image from "next/image";
 
+// Helper function to get the correct asset path
+const getAssetPath = (path) => {
+  return process.env.NODE_ENV === 'production' ? `/portfolio-site${path}` : path;
+};
+
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
       {/* Navigation */}
       <nav className="fixed w-full bg-white/80 backdrop-blur-sm z-50 border-b">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
@@ -20,13 +25,15 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 md:px-8 max-w-6xl mx-auto">
+      <section className="pt-32 pb-20 px-4 md:px-8 max-w-6xl mx-auto relative">
         <div className="flex flex-col md:flex-row items-center gap-12">
-          <div className="w-48 h-48 rounded-full bg-gray-200 flex-shrink-0 relative overflow-hidden">
-            <img
-              src="/images/myphoto.jpg"
+          <div className="w-48 h-48 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex-shrink-0 relative overflow-hidden shadow-xl">
+            <Image
+              src={getAssetPath('/images/myphoto.jpg')}
               alt="王娜的照片"
-              className="object-cover w-full h-full"
+              width={192}
+              height={192}
+              className="object-cover w-full h-full transition-transform hover:scale-105 duration-300"
             />
           </div>
           <div className="text-center md:text-left">
@@ -180,7 +187,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 px-4 md:px-8 bg-gray-50" id="contact">
+      <section className="py-20 px-4 md:px-8 bg-gradient-to-br from-blue-50 via-white to-indigo-50" id="contact">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-8">联系我</h2>
           <p className="text-gray-600 mb-12">
@@ -209,8 +216,8 @@ export default function Home() {
             </a>
             <span className="hidden md:inline text-gray-300">|</span>
             <a 
-              href="/wangna-resume.pdf"
-              className="flex items-center gap-3 text-black hover:text-gray-600 transition-colors px-4 py-2 rounded-full hover:bg-gray-50"
+              href={getAssetPath('/wangna-resume.pdf')}
+              className="flex items-center gap-3 text-gray-700 hover:text-blue-600 transition-colors px-4 py-2 rounded-full hover:bg-blue-50"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
