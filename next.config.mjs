@@ -6,8 +6,10 @@ const nextConfig = {
     loader: 'custom',
     loaderFile: './image-loader.js'
   },
-  basePath: '/portfolio-site',
-  assetPrefix: '/portfolio-site'
+  ...(process.env.NODE_ENV === 'production' ? {
+    basePath: '/portfolio-site',
+    assetPrefix: '/portfolio-site'
+  } : {})
 };
 
 export default nextConfig;
