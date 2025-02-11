@@ -231,7 +231,18 @@ export default function Home() {
               <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 flex flex-col">
                 <div 
                   className="h-48 bg-gray-100 relative overflow-hidden cursor-pointer"
-                  onClick={() => setSelectedImage(project.image)}
+                  onClick={() => {
+                    // 百度统计 - 增强版跟踪
+                    if (window._hmt) {
+                      const timestamp = new Date().toISOString();
+                      const viewportWidth = window.innerWidth;
+                      const viewportHeight = window.innerHeight;
+                      window._hmt.push(['_trackEvent', '项目', '查看', project.title]);
+                      window._hmt.push(['_trackEvent', '项目详情', '设备信息', `${viewportWidth}x${viewportHeight}`]);
+                      window._hmt.push(['_trackEvent', '项目时间', timestamp, project.title]);
+                    }
+                    setSelectedImage(project.image);
+                  }}
                 >
                   <Image
                     src={project.image}
@@ -323,7 +334,9 @@ export default function Home() {
             <a 
               href="tel:19521314815"
               onClick={() => {
-                window._hmt && window._hmt.push(['_trackEvent', '联系方式', '点击', '电话']);
+                if (window._hmt) {
+                  window._hmt.push(['_trackEvent', '联系方式', '点击', '电话']);
+                }
               }}
               className="flex items-center gap-3 text-black hover:text-gray-600 transition-colors px-4 py-2 rounded-full hover:bg-gray-50"
             >
@@ -336,7 +349,9 @@ export default function Home() {
             <a 
               href="mailto:alice_wang_2018@163.com"
               onClick={() => {
-                window._hmt && window._hmt.push(['_trackEvent', '联系方式', '点击', '邮箱']);
+                if (window._hmt) {
+                  window._hmt.push(['_trackEvent', '联系方式', '点击', '邮箱']);
+                }
               }}
               className="flex items-center gap-3 text-black hover:text-gray-600 transition-colors px-4 py-2 rounded-full hover:bg-gray-50"
             >
@@ -350,7 +365,9 @@ export default function Home() {
             <a 
               href={getAssetPath('/WangNaResume0211.pdf')}
               onClick={() => {
-                window._hmt && window._hmt.push(['_trackEvent', '简历', '下载', 'PDF简历']);
+                if (window._hmt) {
+                  window._hmt.push(['_trackEvent', '简历', '下载', 'PDF简历']);
+                }
               }}
               className="flex items-center gap-3 text-gray-700 hover:text-blue-600 transition-colors px-4 py-2 rounded-full hover:bg-blue-50"
             >

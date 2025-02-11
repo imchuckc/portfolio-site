@@ -19,8 +19,10 @@ export default function RootLayout({ children }) {
     <html lang="zh-CN">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://hm.baidu.com" crossOrigin="anonymous" />
       </head>
       <body className={`${geist.className} antialiased font-sans`} suppressHydrationWarning>
         <BaiduAnalytics />
