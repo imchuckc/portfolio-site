@@ -36,17 +36,11 @@ export default function RootLayout({ children }) {
           `}
         </Script>
         {/* 百度统计 */}
-        <script dangerouslySetInnerHTML={{
-          __html: `
-            var _hmt = _hmt || [];
-            (function() {
-              var hm = document.createElement("script");
-              hm.src = "https://hm.baidu.com/hm.js?861e8cbf49ea01e44d8edc43cc12bbbe";
-              var s = document.getElementsByTagName("script")[0]; 
-              s.parentNode.insertBefore(hm, s);
-            })();
-          `
-        }} />
+        <script 
+          src="https://hm.baidu.com/hm.js?861e8cbf49ea01e44d8edc43cc12bbbe"
+          async
+          crossOrigin="anonymous"
+        />
       </head>
       <body className={`${geist.className} antialiased font-sans`} suppressHydrationWarning>
         {children}
