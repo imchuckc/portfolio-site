@@ -21,6 +21,7 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://hm.baidu.com" crossOrigin="anonymous" />
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
@@ -35,8 +36,8 @@ export default function RootLayout({ children }) {
           `}
         </Script>
         {/* 百度统计 */}
-        <Script id="baidu-analytics" strategy="afterInteractive">
-          {`
+        <script dangerouslySetInnerHTML={{
+          __html: `
             var _hmt = _hmt || [];
             (function() {
               var hm = document.createElement("script");
@@ -44,8 +45,8 @@ export default function RootLayout({ children }) {
               var s = document.getElementsByTagName("script")[0]; 
               s.parentNode.insertBefore(hm, s);
             })();
-          `}
-        </Script>
+          `
+        }} />
       </head>
       <body className={`${geist.className} antialiased font-sans`} suppressHydrationWarning>
         {children}
