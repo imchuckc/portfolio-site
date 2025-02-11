@@ -35,12 +35,12 @@ export default function RootLayout({ children }) {
           `}
         </Script>
         {/* 百度统计 */}
-        <Script id="baidu-analytics" strategy="afterInteractive">
+        <Script strategy="afterInteractive">
           {`
             var _hmt = _hmt || [];
             (function() {
               var hm = document.createElement("script");
-              hm.src = "https://hm.baidu.com/hm.js?861e8cbf49ea01e44d8edc43cc12bbbe";
+              hm.src = "https://hm.baidu.com/hm.js?YOUR_BAIDU_SITE_ID";
               var s = document.getElementsByTagName("script")[0]; 
               s.parentNode.insertBefore(hm, s);
             })();
